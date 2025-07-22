@@ -39,16 +39,26 @@
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
 
+    console.log(inventors.filter(inventor => inventor.year >= 1500 && inventor.year <1600));
+
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
+
+    console.log(inventors.map(inventor => inventor.first + " " + inventor.last));
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
 
+    console.log(inventors.sort((inventor1, inventor2) => inventor1.year - inventor2.year));
+
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
 
+    console.log(inventors.reduce((sum, inventor) => sum += (inventor.passed - inventor.year),0));
+
     // 5. Sort the inventors by years lived
+
+    console.log(inventors.sort((inventor1, inventor2) => (inventor2.passed - inventor2.year) - (inventor1.passed - inventor1.year)));
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
@@ -57,9 +67,40 @@
     // 7. sort Exercise
     // Sort the people alphabetically by last name
 
+    console.log(inventors.sort((inventor1, inventor2) => inventor1.last.localeCompare(inventor2.last)));
+
+    console.log(people.sort());
+
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+
+    function unique (arr) {
+      let uniques = [];
+      let isUnique = true;
+      for (const item of arr) {
+        for (let i = 0; i < uniques.length; i++) if (uniques[i] === item) isUnique = false;
+        if (isUnique) uniques.push(item);
+        isUnique = true;
+      }
+      return uniques;
+    }
+
+    function countInstances (arr) {
+      let uniques = unique(arr);
+      let counts = new Array(uniques.length).fill(0);
+      for (let i = 0; i < arr.length; i++) counts[uniques.indexOf(arr[i])]++;
+      for (let i = 0; i < uniques.length; i++) uniques[i] = [uniques[i], counts[i]];
+      return uniques;
+    }
+
+    console.log(countInstances(data));
+
+    console.log(data.reduce((uniques, item) => {
+      if (!uniques[item]) uniques[item] = 0;
+      uniques[item]++;
+      return uniques;
+    }, {}));
 
   </script>
 </body>
